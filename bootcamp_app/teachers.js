@@ -8,13 +8,14 @@ const pool = new Pool({
 });
 
 let args = process.argv.splice(2);
+
 pool.query(`
 SELECT DISTINCT teachers.name as teacher, cohorts.name as cohort
 FROM teachers
   JOIN assistance_requests ON teacher_id = teachers.id
   JOIN students ON student_id = students.id
   JOIN cohorts ON cohort_id = cohorts.id
-WHERE cohorts.name = ${args.join(' ')}
+WHERE cohorts.name = ${args[0]}
 ORDER BY teacher;
 `)
   .then(res => {
@@ -24,6 +25,9 @@ ORDER BY teacher;
   })
   .catch(err => console.error('query error', err.stack));
 
+
+
+/* Lighthouse Answer */
 // pool.query(`
 // SELECT DISTINCT teachers.name as teacher, cohorts.name as cohort
 // FROM teachers
